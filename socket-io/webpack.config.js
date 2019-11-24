@@ -1,4 +1,5 @@
 const path = require('path');
+const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
     entry: [
@@ -6,6 +7,7 @@ module.exports = {
       './src/index.js'
     ],
     target: 'node',
+    externals: [nodeExternals()],
     devtool: 'source-map',
     output: {
         path: path.resolve(__dirname, 'build'),
@@ -13,6 +15,9 @@ module.exports = {
         publicPath: 'build/'
     },
     module: {
+        // noParse: function (content) {
+        //     return /express/.test(content);
+        // },
         rules: [
             {
                 use: 'babel-loader',

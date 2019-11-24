@@ -1,15 +1,21 @@
 {
-    "version": "0.1.0",
-    "command": "npm",
-    "isShellCommand": true,
-    "showOutput": "silent",
-    "tasks": [
-      {
-        "taskName": "start",
-        "isBuildCommand": false,
-        "isTestCommand": false,
-        "showOutput": "always",
-        "args": ["start"]
-      }
-    ]
-  }
+  "version": "0.1.0",
+  "command": "npm",
+  "isShellCommand": true,
+  "showOutput": "silent",
+  "tasks": [
+    {
+      "taskName": "start",
+      "isBuildCommand": false,
+      "isTestCommand": false,
+      "showOutput": "always",
+      "args": ["start"]
+    },
+    {
+      "taskName": "echotest",
+      "command": "echo", 
+      "args": ["test"],
+      "isShellCommand": true
+    }
+  ]
+}

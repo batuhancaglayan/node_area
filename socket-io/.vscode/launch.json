@@ -15,6 +15,7 @@
       "restart": true,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
+      //"preLaunchTask": "echotest",
       "runtimeArgs": [
         "run-script",
         "start"
