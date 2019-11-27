@@ -1,0 +1,13 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558 
+    // for the documentation about the tasks.json format fuser -k -n tcp 9229
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "runOptions": {"reevaluateOnRerun": true},
+            "label": "killDebugPort",      
+            "type": "shell",
+            "command": "echo '123456' | sudo -S kill -9 $( sudo -S lsof -i:9229 -t ) | exit",            
+        }
+    ]
+}

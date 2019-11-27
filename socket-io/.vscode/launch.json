@@ -4,6 +4,7 @@
     {
       "type": "node",
       "request": "launch",
+      "runtimeVersion": "12.13.1",
       "name": "Start Program",
       "program": "${workspaceFolder}/build/bundle.js"
     },
@@ -11,11 +12,11 @@
       "type": "node",
       "request": "launch",
       "name": "Debug Program",
-      "runtimeExecutable": "npm",
+      "runtimeExecutable": "/home/batuhanca/.nvm/versions/node/v12.13.1/bin/npm",
       "restart": true,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      //"preLaunchTask": "echotest",
+      "preLaunchTask": "killDebugPort",
       "runtimeArgs": [
         "run-script",
         "start"
