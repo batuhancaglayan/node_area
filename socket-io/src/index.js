@@ -10,7 +10,7 @@ const server = http.createServer(app);
 const socket = io(server);
   
   app.get('/', function(req, res) {
-    console.log("aq");
+    console.log('get');
     res.header('Access-Control-Allow-Origin', '*');
     res.sendFile(path.resolve('./src/view/index.html'));
   });
@@ -22,18 +22,18 @@ const socket = io(server);
   });
 
   server.listen(port, () => {
-    console.log('Server running at http://127.0.0.1:' + port);
+    //console.log('Server running at http://127.0.0.1:' + port);
   });
   
   socket.on('connect', function(client){
     console.log('connection');
     // Success!  Now listen to messages to be received
     client.on('message',function(event){
-      console.log('Received message from clientss!', event);
+      console.log('Received message from client!', event);
     });
     client.on('disconnect',function(){
       //clearInterval(interval);
-      console.log('Server has disconnected');
+      //console.log('Server has disconnected');
     });
   });
   

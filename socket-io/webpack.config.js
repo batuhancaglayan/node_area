@@ -3,9 +3,10 @@ const nodeExternals = require('webpack-node-externals');
 
 module.exports = {
     entry: [
-      'regenerator-runtime/runtime',
-      './src/index.js'
+        'regenerator-runtime/runtime',
+        './src/index.js'
     ],
+    //watch: false,
     target: 'node',
     externals: [nodeExternals()],
     devtool: 'source-map',
@@ -14,6 +15,15 @@ module.exports = {
         filename: 'bundle.js',
         publicPath: 'build/'
     },
+    // devServer: {
+    //     watchOptions: {
+    //         ignored: [
+    //             path.resolve(__dirname, 'build'),
+    //             path.resolve(__dirname, 'node_modules')
+    //           ]
+    //         //ignored: '**/.*',
+    //     },
+    // },
     module: {
         // noParse: function (content) {
         //     return /express/.test(content);
