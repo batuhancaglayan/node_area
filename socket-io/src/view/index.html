@@ -27,7 +27,7 @@
         function sendMessageToServer(message) {
             console.log(message);
             socket.emit('message', message);
-            socket.send(message);
+            //socket.send(message);
         }
         
         var interval = setInterval(function() {
