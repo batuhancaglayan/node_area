@@ -3,15 +3,18 @@
 <head>
     <title>batuhan</title>
     <script src="http://localhost:9090/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 </head>
-<body>   
+<body> 
+    <button id="roomRequest">roomRequest</button>  
     <script>
-               
+
         var socket = io('http://localhost:9090');       
-        socket.connect();
+        //socket.connect();
         
         // Add a connect listener
         socket.on('connect', function() {
+            console.log(socket)
             console.log('Client has connected to the server!');
         });
         // Add a connect listener
@@ -24,15 +27,21 @@
         });
         
         // Sends a message to the server via sockets
-        function sendMessageToServer(message) {
+        function sendMessageToServer(topic, message) {
             console.log(message);
-            socket.emit('message', message);
+            socket.emit(topic, message);
             //socket.send(message);
         }
-        
-        var interval = setInterval(function() {
-            sendMessageToServer('This is a message from the server!  ' + new Date().getTime());
-        }, 5000);
+                     
+        $(document).ready(function(){
+            $("#roomRequest").click(function(){
+                sendMessageToServer('roomRequest', 'new room request');
+            });
+        });
+
+        // var interval = setInterval(function() {
+        //     sendMessageToServer('This is a message from the server!  ' + new Date().getTime());
+        // }, 5000);
         
     </script> 
 </body>
