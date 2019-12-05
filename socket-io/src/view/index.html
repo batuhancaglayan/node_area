@@ -8,40 +8,33 @@
 <body> 
     <button id="roomRequest">roomRequest</button>  
     <script>
-
-        var socket = io('http://localhost:9090');       
-        //socket.connect();
         
-        // Add a connect listener
-        socket.on('connect', function() {
-            console.log(socket)
-            console.log('Client has connected to the server!');
-        });
-        // Add a connect listener
-        socket.on('message', function(data) {
-            console.log('Received a message from the server!', data);
-        });
-        // Add a disconnect listener
-        socket.on('disconnect', function() {
-            console.log('The client has disconnected!');
-        });
-        
-        // Sends a message to the server via sockets
-        function sendMessageToServer(topic, message) {
-            console.log(message);
-            socket.emit(topic, message);
-            //socket.send(message);
+        var socketList = [];
+        for (let index = 0; index < 4; index++) {
+            let socket = io('http://localhost:9090');  
+            socketList.push(socket);
+            // Add a connect listener
+            socket.on('connect', function() {
+                console.log(socket.id);
+                console.log('Client has connected to the server!');
+            });
+            // Add a connect listener
+            socket.on('message', function(data) {
+                console.log('Received a message from the server!', data);
+            });
+            // Add a disconnect listener
+            socket.on('disconnect', function() {
+                console.log('The client has disconnected!');
+            });
         }
-                     
+             
         $(document).ready(function(){
             $("#roomRequest").click(function(){
-                sendMessageToServer('roomRequest', 'new room request');
+                socketList.forEach(socket => {
+                    socket.emit('roomRequest', 'new room request');
+                });
             });
         });
-
-        // var interval = setInterval(function() {
-        //     sendMessageToServer('This is a message from the server!  ' + new Date().getTime());
-        // }, 5000);
         
     </script> 
 </body>
