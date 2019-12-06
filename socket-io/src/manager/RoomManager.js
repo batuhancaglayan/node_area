@@ -1,9 +1,11 @@
 import AppManager from './AppManager';
 import { appEventEmitter, Events } from '../events/AppEventEmitter';
+import uuidv4 from 'uuid/v4';
 
 const roomManager = class RoomManager extends AppManager{
     constructor(config, socket){
         super(config)
+        this.GROUPPREFIX = 'GROUP_';
         this.socket = socket;
         this.init();
     }
@@ -13,13 +15,32 @@ const roomManager = class RoomManager extends AppManager{
     }
     
     handleRoomGroup(event){
+        let groupId = this.GROUPPREFIX + uuidv4();
+        // var room = this.socket.sockets.in(groupId);
+        // room.on('join', function() {
+        //     console.log("Someone joined the room." + event);
+        //     event.forEach(clientId => {
+        //         let client = this.socket.sockets.connected[clientId];
+        //         console.log(client.rooms);
+        //     });
+        // });
+        
+        // let clientId = event[0];
+        // this.socket.sockets.connected[clientId].emit("message", "aq");
+        
         event.forEach(clientId => {
-            console.log(this.socket.sockets.connected[clientId]);
-            //let client = this.socket.sockets.connected[clientId];
-            //console.log(client);
+            let client = this.socket.sockets.connected[clientId];
+            client.join(groupId);
+            client.emit('room', {'groupId' : groupId});
+            //client.emit('message', 'aq');
+            // client.emit('q', 'q');
+            // client.emit('message', 'aaa');
+            // this.socket.to(groupId).emit({'groupId': groupId});
         });
         
-        console.log(event);
+        
+        
+        
     }
 }
 

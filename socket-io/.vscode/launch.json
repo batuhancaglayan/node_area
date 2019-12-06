@@ -16,7 +16,7 @@
       "restart": true,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      "preLaunchTask": "killDebugPort",
+      // "preLaunchTask": "killDebugPort",
       "runtimeArgs": [
         "run-script",
         "start"
@@ -24,7 +24,19 @@
       "port": 9229,
       "outFiles": [
         "${workspaceFolder}/**/*.js"
-    ],
-    }
-   ]
+      ],
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "/home/batuhanca/.nvm/versions/node/v12.13.1/bin/npm",
+      "name": "Run Test",
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "runtimeArgs": [
+        "run-script",
+        "start-with-test"
+      ],
+    },
+  ]
 }

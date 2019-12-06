@@ -10,9 +10,8 @@
     <script>
         
         var socketList = [];
-        for (let index = 0; index < 4; index++) {
+        for (let index = 0; index < 8; index++) {
             let socket = io('http://localhost:9090');  
-            socketList.push(socket);
             // Add a connect listener
             socket.on('connect', function() {
                 console.log(socket.id);
@@ -26,8 +25,22 @@
             socket.on('disconnect', function() {
                 console.log('The client has disconnected!');
             });
+            
+            socket.on('room', function(data) {
+                var groupId = data.groupId;
+                console.log(groupId);
+                socket.on(groupId, function(text) {
+                    console.log("client id => " + socket.id + " group data => " + text);
+                });
+                
+                socket.emit('sendMessage', {'groupId': groupId, 'message': 'daleeee'});
+            });
+            
+            if (index < 4){
+                socketList.push(socket);
+            }
         }
-             
+        
         $(document).ready(function(){
             $("#roomRequest").click(function(){
                 socketList.forEach(socket => {

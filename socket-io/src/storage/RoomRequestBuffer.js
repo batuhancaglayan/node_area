@@ -20,11 +20,11 @@ class RoomRequestBuffer {
         
         this.bufferList.push(event);
     }
-
+    
     handleCancelRoomRequest(event){
         this.bufferList.delete(event); 
     }
-       
+    
     rangeChangeListener(plus, minus, index){
         var quotient = Math.floor(this.bufferList.length / this.roomSize);
         if (quotient < 1){
@@ -33,8 +33,7 @@ class RoomRequestBuffer {
         
         var roomGroupList = [];
         for (let i = 0; i < quotient; i++) {
-            let aq = this.bufferList.splice(0,this.roomSize); 
-            roomGroupList.push(this.bufferList.splice(0,this.roomSize));
+            roomGroupList.push(...this.bufferList.splice(0,this.roomSize));
         }  
         
         appEventEmitter.emit(Events.ROOMGROUP, roomGroupList);
