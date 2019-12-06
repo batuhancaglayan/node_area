@@ -37,6 +37,7 @@ const socketManager = class SocketManager extends AppManager {
     }
 
     getInstance(){
+        console.log("aq1");
         return this.io;
     }
 }

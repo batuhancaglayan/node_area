@@ -16,7 +16,7 @@
       "restart": true,
       "console": "integratedTerminal",
       "internalConsoleOptions": "neverOpen",
-      // "preLaunchTask": "killDebugPort",
+      "preLaunchTask": "killDebugPort",
       "runtimeArgs": [
         "run-script",
         "start"
