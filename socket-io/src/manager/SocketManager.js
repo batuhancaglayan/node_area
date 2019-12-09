@@ -5,6 +5,7 @@ import { appEventEmitter, Events } from '../events/AppEventEmitter';
 const socketManager = class SocketManager extends AppManager {
     constructor(config, http){
         super(config);
+        this.connCount = 0;
         this.io = socketio(http);
         this.init();
     }
@@ -14,6 +15,7 @@ const socketManager = class SocketManager extends AppManager {
     }
     
     connect(socket){
+        this.connCount++;
         socket.on(Events.ROOMREQUEST, (event) => this.roomRequest(event, socket));
         socket.on(Events.SENDMESSAGE, (event) => this.sendMessage(event, socket));
         socket.on(Events.LEAVEROOM, (event) => this.leaveRoom(event, socket));
@@ -23,21 +25,25 @@ const socketManager = class SocketManager extends AppManager {
     roomRequest(event, socket){
         appEventEmitter.emit(Events.ROOMREQUEST, socket.id);
     }
-
+    
     sendMessage(event, socket){
         var groupId = event.groupId;
         this.io.to(groupId).emit(groupId, event.message);
     }
-
+    
     leaveRoom(event, socket){
     }
-  
+    
     disconnect(event, socket){
+        this.connCount--;
         appEventEmitter.emit(Events.CANCELROOMREQUEST, socket.id);
     }
-
+    
+    getConnCount(){
+        return this.connCount;
+    }
+    
     getInstance(){
-        console.log("aq1");
         return this.io;
     }
 }

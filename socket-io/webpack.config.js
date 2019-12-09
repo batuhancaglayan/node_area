@@ -38,38 +38,6 @@
 //     }
 // }
 
-// const path = require('path');
-// const nodeExternals = require('webpack-node-externals');
-
-// module.exports = 
-
-// {   
-//     entry: [        
-//         'regenerator-runtime/runtime',
-//         './src/index.js'
-//     ],   
-//     output: {
-//         path: path.resolve(__dirname, 'build'),
-//         filename: 'bundle.js',
-//         publicPath: 'build/'       
-//     }, 
-//     module: {
-//         rules: [
-//             {
-//                 use: 'babel-loader',
-//                 exclude: /(node_modules)/,
-//                 test: /\.js$/
-//             }
-//         ]
-//     },
-//     stats: {
-//         colors: true
-//     },
-//     devtool: 'source-map',
-//     externals: [nodeExternals()],
-//     target: 'node'
-// };
-
 const path = require('path');
 const nodeExternals = require('webpack-node-externals');
 
@@ -77,7 +45,7 @@ module.exports =
 
 {   
     entry: [        
-        // 'regenerator-runtime/runtime',
+        'regenerator-runtime/runtime',
         './src/index.js'
     ],   
     output: {
@@ -86,36 +54,68 @@ module.exports =
         publicPath: 'build/'       
     }, 
     module: {
-        // configuration regarding modules
         rules: [
-            // rules for modules (configure loaders, parser options, etc.)
             {
-                test: /\.js$/,
-                include: [
-                    path.resolve(__dirname, "index")
-                ],
-                // exclude: [
-                //     path.resolve(__dirname, "app/demo-files")
-                // ],
-                loader: "babel-loader",
-                // the loader which should be applied, it'll be resolved relative to the context
-                options: {
-                    presets: ["es2015"]
-                },
+                use: 'babel-loader',
+                exclude: /(node_modules)/,
+                test: /\.js$/
             }
         ]
     },
-    resolve: {
-        modules: [
-            "node_modules",
-            path.resolve(__dirname, "app")
-        ],
-        extensions: [".js", ".json", ".jsx", ".css"]
-    },
     stats: {
         colors: true
-    },   
+    },
     devtool: 'source-map',
     externals: [nodeExternals()],
     target: 'node'
 };
+
+// const path = require('path');
+// const nodeExternals = require('webpack-node-externals');
+
+// module.exports = 
+
+// {   
+//     entry: [        
+//         // 'regenerator-runtime/runtime',
+//         './src/index.js'
+//     ],   
+//     output: {
+//         path: path.resolve(__dirname, 'build'),
+//         filename: 'bundle.js',
+//         publicPath: 'build/'       
+//     }, 
+//     module: {
+//         // configuration regarding modules
+//         rules: [
+//             // rules for modules (configure loaders, parser options, etc.)
+//             {
+//                 test: /\.js$/,
+//                 include: [
+//                     path.resolve(__dirname, "index")
+//                 ],
+//                 // exclude: [
+//                 //     path.resolve(__dirname, "app/demo-files")
+//                 // ],
+//                 loader: "babel-loader",
+//                 // the loader which should be applied, it'll be resolved relative to the context
+//                 options: {
+//                     presets: ["es2015", "@babel/preset-env"]
+//                 },
+//             }
+//         ]
+//     },
+//     resolve: {
+//         modules: [
+//             "node_modules",
+//             path.resolve(__dirname, "index")
+//         ],
+//         extensions: [".js", ".json", ".jsx", ".css"]
+//     },
+//     stats: {
+//         colors: true
+//     },   
+//     devtool: 'source-map',
+//     externals: [nodeExternals()],
+//     target: 'node'
+// };

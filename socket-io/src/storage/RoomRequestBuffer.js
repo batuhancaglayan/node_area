@@ -4,19 +4,24 @@ import { appEventEmitter, Events } from '../events/AppEventEmitter';
 class RoomRequestBuffer {
     constructor(config){
         this.config = config;
+        this.roomRequestCount = 0;
         this.roomSize = config.roomSize;
         this.bufferList = new List();
-        this.rangeChangeListener = this.rangeChangeListener.bind(this);
-        this.bufferList.addRangeChangeListener(this.rangeChangeListener);
+        //this.rangeChangeListener = this.rangeChangeListener.bind(this);
+        //this.bufferList.addRangeChangeListener(this.rangeChangeListener);
         appEventEmitter.on(Events.ROOMREQUEST, (event) => setImmediate(() => this.handleRoomRequest(event)));
-        appEventEmitter.on(Events.CANCELROOMREQUEST, (event) => setImmediate(() => this.handleCancelRoomRequest(event)))
-    }  
+        appEventEmitter.on(Events.CANCELROOMREQUEST, (event) => setImmediate(() => this.handleCancelRoomRequest(event)));
+        setInterval((event) => this.checkCandidateRoom(event), 1000);
+    }
     
     handleRoomRequest(event){
         if (this.bufferList.has(event)){
             console.log("request exist for client id: " + event);
             return;
         }
+        
+        // this.roomRequestCount++;
+        // console.log(this.roomRequestCount);
         
         this.bufferList.push(event);
     }
@@ -25,7 +30,7 @@ class RoomRequestBuffer {
         this.bufferList.delete(event); 
     }
     
-    rangeChangeListener(plus, minus, index){
+    checkCandidateRoom(event){
         var quotient = Math.floor(this.bufferList.length / this.roomSize);
         if (quotient < 1){
             return;
@@ -33,11 +38,15 @@ class RoomRequestBuffer {
         
         var roomGroupList = [];
         for (let i = 0; i < quotient; i++) {
-            roomGroupList.push(...this.bufferList.splice(0,this.roomSize));
+            roomGroupList.push(this.bufferList.splice(0,this.roomSize));
         }  
         
         appEventEmitter.emit(Events.ROOMGROUP, roomGroupList);
     }
+    
+    // rangeChangeListener(plus, minus, index){
+    
+    // }
 }
 
 const roomRequestBuffer = new RoomRequestBuffer({ roomSize: 4 });
