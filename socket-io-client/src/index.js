@@ -1,9 +1,9 @@
 var SocketIO = require('socket.io-client'),
 argv = require('optimist').argv;
 
-var n = argv.n || 50;
-var b = argv.b || 10; // bucket-size
-var host = argv.h || 'http://localhost:9090';
+var n = argv.n || 30;
+var b = argv.b || 200; // bucket-size
+var host = argv.h || 'ws://localhost:9090';
 
 var sockets = [];
 const groupSocketMap = new Map();
@@ -22,12 +22,10 @@ var setupSocket = function setupSocket(socket, id) {
     socket.on('disconnect', function () {
         connectionCount--;
         disconnectionCount++;
-        groupIdList = [];
     });
     
     socket.on('reconnect', function () {
         reconn++;
-        groupIdList = [];
     });
     
     socket.on('error', function (err) {
@@ -72,7 +70,9 @@ var tryMoreConnection = function tryMoreConnection() {
                 let socket = SocketIO.connect(host, {
                     'force new connection': true,
                     'reconnect': true,
-                    'reconnection': true
+                    'reconnection': true,
+                    'upgrade': false, 
+                    'transports': ['websocket']
                 });
                 setupSocket(socket, j);
                 sockets.push(socket);

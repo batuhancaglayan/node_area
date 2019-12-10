@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+
+  socketserver:
+    image: socket:1.0
+    ports:
+      - "9090:9090"
+    networks:
+      - socket
+
+networks:
+  socket:
+    driver: bridge

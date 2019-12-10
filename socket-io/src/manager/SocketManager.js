@@ -6,7 +6,7 @@ const socketManager = class SocketManager extends AppManager {
     constructor(config, http){
         super(config);
         this.connCount = 0;
-        this.io = socketio(http);
+        this.io = socketio(http, {'pingInterval': 10000, 'transports': ['websocket']});
         this.init();
     }
     
@@ -27,8 +27,9 @@ const socketManager = class SocketManager extends AppManager {
     }
     
     sendMessage(event, socket){
-        var groupId = event.groupId;
-        this.io.to(groupId).emit(groupId, event.message);
+        // var groupId = event.groupId;
+        // this.io.to(groupId).emit(groupId, event.message)
+        // setImmediate(() => this.io.to(groupId).emit(groupId, event.message));
     }
     
     leaveRoom(event, socket){
