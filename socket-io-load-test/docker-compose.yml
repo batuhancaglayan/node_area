@@ -1,0 +1,55 @@
+version: '2'
+
+services:
+
+  socket_server_1:
+    container_name: socket_server_1
+    image: socket:1.0
+    #ports:
+      #- "9090:9090"
+    #environment:
+      #NODE_OPTIONS: "-h 0.0.0.0"
+    networks:
+      socket_app_net:
+        ipv4_address: 173.18.0.2
+
+  socket_server_2:
+    container_name: socket_server_2
+    image: socket:1.0
+    #ports:
+      #- "9090:9090"
+    #environment:
+      #NODE_OPTIONS: "-h 0.0.0.0"
+    networks:
+      socket_app_net:
+        ipv4_address: 173.18.0.3
+
+  socket_server_3:
+    container_name: socket_server_3
+    image: socket:1.0
+    #ports:
+      #- "9090:9090"
+    #environment:
+      #NODE_OPTIONS: "-h 0.0.0.0"
+    networks:
+      socket_app_net:
+        ipv4_address: 173.18.0.4
+
+  socket_proxy:
+    container_name: socket_proxy
+    build: ./haproxy
+    ports:
+      - "9999:9999"
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+    networks:
+      socket_app_net:
+        ipv4_address: 173.18.0.100
+
+networks:
+  socket_app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 173.18.0.0/16

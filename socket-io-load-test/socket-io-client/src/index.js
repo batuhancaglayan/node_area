@@ -1,9 +1,9 @@
 var SocketIO = require('socket.io-client'),
 argv = require('optimist').argv;
 
-var n = argv.n || 30;
+var n = argv.n || 100;
 var b = argv.b || 200; // bucket-size
-var host = argv.h || 'ws://localhost:9090';
+var host = argv.h || 'ws://localhost:9999';
 
 var sockets = [];
 const groupSocketMap = new Map();
